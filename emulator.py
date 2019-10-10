@@ -12,6 +12,8 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 def load_data(data_file):
 	data={}
 	for line in data_file:
+		if len(line) == 0 or line[0] == '#':
+			continue
 		address, info = line.split(" ")
 		data[int(address,16)] = int(data,16)
 	return data
