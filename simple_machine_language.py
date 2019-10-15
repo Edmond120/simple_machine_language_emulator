@@ -37,7 +37,7 @@ def move(memory,registers,settings,operand_bytes):
 	MOVE the bit pattern found in register R to register S.
 	Example: 40A4 would cause the contents of register A to be copied into register 4.
 	"""
-	if operand_bytes[0] != 0:
+	if operand_bytes[0] != 0x0:
 		operand_str = str.join(' ',map(hex,operand_bytes))
 		raise ValueError('Operation MOVE expected 0RS but recieved ' + operand_str)
 	R, S = (operand_bytes[1],operand_bytes[2])
