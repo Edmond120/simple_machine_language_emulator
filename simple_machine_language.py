@@ -20,6 +20,17 @@ def load_register_with_bit_pattern(memory,registers,settings,operand_bytes):
 
 	set_data(registers,R,XY,settings)
 
+def store(memory,registers,settings,operand_bytes):
+	"""Opcode 3, Operand RXY
+	STORE the bit pattern found in register R in the memory cell whose address
+	is XY.
+	Example: 35B1 would cause the contents of register 5 to be placed in the
+	memory cell whose address is B1.
+	"""
+	R, XY = (operand_bytes[0],merge_bytes(*operand_bytes[1:]))
+
+	set_data(memory,XY,registers[R],settings)
+
 
 def set_data(dic,key,value,settings):
 	dic[key] = overflow(value,settings['memory_unit_bit_size'])
@@ -40,4 +51,6 @@ def merge_bytes(*bytes):
 
 code_operation_map = {
 	0x1 : load_register_from_memory,
+	0x2 : load_register_with_bit_pattern,
+	0x3 : store,
 }
