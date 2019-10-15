@@ -1,5 +1,6 @@
 from bit_utils import *
 
+#operation functions
 def load_register_from_memory(memory,registers,settings,operand_bytes):
 	"""Opcode 1, Operand RXY
 	LOAD the register R with the bit pattern found in the memory cell whose
@@ -31,6 +32,18 @@ def store(memory,registers,settings,operand_bytes):
 
 	set_data(memory,XY,registers[R],settings)
 
+def move(memory,registers,settings,operand_bytes):
+	"""Opcode 4, Operand 0RS
+	MOVE the bit pattern found in register R to register S.
+	Example: 40A4 would cause the contents of register A to be copied into register 4.
+	"""
+	if operand_bytes[0] != 0:
+		operand_str = str.join(' ',map(hex,operand_bytes))
+		raise ValueError('Operation MOVE expected 0RS but recieved ' + operand_str)
+	R, S = (operand_bytes[1],operand_bytes[2])
+
+	set_data(registers,S,registers[R],settings)
+#
 
 def set_data(dic,key,value,settings):
 	dic[key] = overflow(value,settings['memory_unit_bit_size'])
