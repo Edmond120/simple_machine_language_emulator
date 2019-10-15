@@ -43,6 +43,18 @@ def move(memory,registers,settings,operand_bytes):
 	R, S = (operand_bytes[1],operand_bytes[2])
 
 	set_data(registers,S,registers[R],settings)
+
+def twos_complement_add(memory,registers,settings,operand_bytes):
+	"""Opcode 5, Operand RST
+	ADD the bit patterns in registers S and T as though they were two’s
+	complement representations and leave the result in register R.
+	Example: 5726 would cause the binary values in registers 2 and 6 to be
+	added and the sum placed in register 7.
+	"""
+	R, S, T = operand_bytes[:]
+
+	n1, n2 = (us_to_tc(registers[S],settings),us_to_tc(registers[T],settings))
+	set_data(registers,R,tc_to_us(n1 + n2),settings)
 #
 
 def set_data(dic,key,value,settings):
@@ -67,4 +79,5 @@ operation_map = {
 	0x2 : load_register_with_bit_pattern,
 	0x3 : store,
 	0x4 : move,
+	0x5 : twos_complement_add,
 }
