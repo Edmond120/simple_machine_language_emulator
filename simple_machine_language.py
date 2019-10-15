@@ -66,4 +66,5 @@ operation_map = {
 	0x1 : load_register_from_memory,
 	0x2 : load_register_with_bit_pattern,
 	0x3 : store,
+	0x4 : move,
 }
