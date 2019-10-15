@@ -11,6 +11,15 @@ def load_register_from_memory(memory,registers,settings,operand_bytes):
 
 	set_data(registers,R,memory[XY],settings)
 
+def load_register_with_bit_pattern(memory,registers,settings,operand_bytes):
+	"""Opcode 2, Operand RXY
+	LOAD the register R with the bit pattern XY.
+	Example: 20A3 would cause the value A3 to be placed in register 0.
+	"""
+	R, XY = (operand_bytes[0],merge_bytes(*operand_bytes[1:]))
+
+	set_data(registers,R,XY,settings)
+
 
 def set_data(dic,key,value,settings):
 	dic[key] = overflow(value,settings['memory_unit_bit_size'])
