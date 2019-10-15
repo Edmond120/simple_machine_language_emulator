@@ -1,3 +1,5 @@
+from bit_utils import *
+
 def load_register_from_memory(memory,registers,settings,operand_bytes):
 	"""Opcode 1, Operand RXY
 	LOAD the register R with the bit pattern found in the memory cell whose
@@ -7,8 +9,11 @@ def load_register_from_memory(memory,registers,settings,operand_bytes):
 	"""
 	R, XY = (operand_bytes[0],merge_bytes(*operand_bytes[1:]))
 
-	registers[R] = memory[XY]
+	set_data(registers,R,memory[XY],settings)
 
+
+def set_data(dic,key,value,settings):
+	dic[key] = overflow(value,settings['memory_unit_bit_size'])
 
 def break_bytes(operand,operand_size):
 	bytes = [0] * operand_size
