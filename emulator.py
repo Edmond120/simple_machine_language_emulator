@@ -1,3 +1,5 @@
+import simple_machine_language
+
 def emulate(memory_file,register_file,start_address,settings):
 	memory    = load_data(memory_file)
 	registers = load_data(register_file)
@@ -21,5 +23,8 @@ def load_data(data_file):
 		data[int(address,16)] = int(info,16)
 	return data
 
+def _data_list(data):
+	return list(map(lambda x: (hex(x),hex(data[x]),),sorted(data.keys())))
+
 def print_data(data):
-	print(list(map(lambda x: (hex(x),hex(data[x]),),sorted(data.keys()))))
+	print(_data_list(data))
