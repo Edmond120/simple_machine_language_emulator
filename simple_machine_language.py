@@ -53,12 +53,13 @@ def twos_complement_add(memory,registers,settings,operand_bytes):
 	"""
 	R, S, T = operand_bytes[:]
 
-	n1, n2 = (us_to_tc(registers[S],settings),us_to_tc(registers[T],settings))
+	n1, n2 = (us_to_tc(registers[S],settings['mu_size']),
+			  us_to_tc(registers[T],settings['mu_size']))
 	set_data(registers,R,tc_to_us(n1 + n2),settings)
 #
 
 def set_data(dic,key,value,settings):
-	dic[key] = overflow(value,settings['memory_unit_bit_size'])
+	dic[key] = overflow(value,settings['mu_size'])
 
 def break_bytes(operand,operand_size):
 	bytes = [0] * operand_size

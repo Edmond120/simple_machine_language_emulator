@@ -10,9 +10,9 @@ def main():
 	memory_size_bits = 8
 
 	settings = {
-				'step'                : False,
-				'print_init'          : True,
-				'memory_unit_bit_size': 8,
+				'step'       : False,
+				'print_init' : True,
+				'mu_size'    : 8, #amount of bits in a memory unit
 	}
 
 	with open(memory_file_path,'r') as memory_file, open(register_file_path,'r') as register_file:
