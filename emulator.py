@@ -4,7 +4,7 @@ def emulate(memory_file,register_file,start_address,settings):
 	memory	= load_data(memory_file)
 	registers = load_data(register_file)
 	program_counter = int(start_address,16)
-	instruction_register = memory[program_counter] * 16 + memory[program_counter + 1]
+	instruction_register = memory[program_counter] * 256 + memory[program_counter + 1]
 	run_emulator(memory,registers,program_counter,instruction_register,settings)
 
 def run_emulator(memory,registers,program_counter,instruction_register,settings):
