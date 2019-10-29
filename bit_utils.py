@@ -1,16 +1,16 @@
 def overflow(integer, bits):
 	"""returns <integer>, truncating it if it exceeds <bits> bits"""
-    max = 2 ** bits - 1
-    if integer <= max:
-        return integer
+	max = 2 ** bits - 1
+	if integer <= max:
+		return integer
 
-    most_sig_bit_value = 1
-    while integer >= most_sig_bit_value * 2:
-        most_sig_bit_value *= 2
-    while integer > max:
-        integer -= most_sig_bit_value
-        most_sig_bit_value //= 2
-    return integer
+	most_sig_bit_value = 1
+	while integer >= most_sig_bit_value * 2:
+		most_sig_bit_value *= 2
+	while integer > max:
+		integer -= most_sig_bit_value
+		most_sig_bit_value //= 2
+	return integer
 
 def us_to_tc(unsigned_int, bits):
 	"""
