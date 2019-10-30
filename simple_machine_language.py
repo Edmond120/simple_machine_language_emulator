@@ -1,3 +1,5 @@
+from functools import wraps
+
 from bit_utils import *
 
 #messages
@@ -6,8 +8,18 @@ ERROR = 1
 END = 2
 JUMP = 3
 
+#keys are ints, values are functions
+operation_map = {}
+
+def operation(opcode):
+	def decorator(func):
+		operation_map[opcode] = func
+		return func
+	return decorator
+
 #operation functions
 #return value, should be a tuple where the first item is a message (int)
+@operation(0x1)
 def load_register_from_memory(memory,registers,settings,operand_bytes):
 	"""Opcode 1, Operand RXY
 	LOAD the register R with the bit pattern found in the memory cell whose
@@ -20,6 +32,7 @@ def load_register_from_memory(memory,registers,settings,operand_bytes):
 	set_data(registers,R,get_data(memory,XY),settings)
 	return (0,)
 
+@operation(0x2)
 def load_register_with_bit_pattern(memory,registers,settings,operand_bytes):
 	"""Opcode 2, Operand RXY
 	LOAD the register R with the bit pattern XY.
@@ -30,6 +43,7 @@ def load_register_with_bit_pattern(memory,registers,settings,operand_bytes):
 	set_data(registers,R,XY,settings)
 	return (0,)
 
+@operation(0x3)
 def store(memory,registers,settings,operand_bytes):
 	"""Opcode 3, Operand RXY
 	STORE the bit pattern found in register R in the memory cell whose address
@@ -42,6 +56,7 @@ def store(memory,registers,settings,operand_bytes):
 	set_data(memory,XY,get_data(registers,R),settings)
 	return (0,)
 
+@operation(0x4)
 def move(memory,registers,settings,operand_bytes):
 	"""Opcode 4, Operand 0RS
 	MOVE the bit pattern found in register R to register S.
@@ -55,6 +70,7 @@ def move(memory,registers,settings,operand_bytes):
 	set_data(registers,S,get_data(registers,R),settings)
 	return (0,)
 
+@operation(0x5)
 def twos_complement_add(memory,registers,settings,operand_bytes):
 	"""Opcode 5, Operand RST
 	ADD the bit patterns in registers S and T as though they were two’s
@@ -93,11 +109,3 @@ def merge_bytes(*bytes):
 		operand *= 16
 		operand += bytes[i]
 	return operand
-
-operation_map = {
-	0x1 : load_register_from_memory,
-	0x2 : load_register_with_bit_pattern,
-	0x3 : store,
-	0x4 : move,
-	0x5 : twos_complement_add,
-}
