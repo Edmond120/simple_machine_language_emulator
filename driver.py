@@ -14,8 +14,8 @@ def main(argv):
 	settings = {
 				'step'           : True,
 				'print_init'     : True,
-				'mu_size'        : 8, #amount of bits in a memory cell can hold
-				'reg_size'       : 16, #amount of bits in a register can hold
+				'mu_size'        : 8, #amount of bits a memory cell can hold
+				'reg_size'       : 16, #amount of bits a register can hold
 				'micro_step'     : True,
 				'clear'          : True,
 				'micro_step_doc' : True,
