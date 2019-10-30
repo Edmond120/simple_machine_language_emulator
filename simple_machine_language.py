@@ -30,7 +30,7 @@ def load_register_from_memory(memory,registers,settings,operand_bytes):
 	R, XY = (operand_bytes[0],merge_bytes(*operand_bytes[1:]))
 
 	set_data(registers,R,get_data(memory,XY),settings)
-	return (0,)
+	return (SUCCESS,)
 
 @operation(0x2)
 def load_register_with_bit_pattern(memory,registers,settings,operand_bytes):
@@ -41,7 +41,7 @@ def load_register_with_bit_pattern(memory,registers,settings,operand_bytes):
 	R, XY = (operand_bytes[0],merge_bytes(*operand_bytes[1:]))
 
 	set_data(registers,R,XY,settings)
-	return (0,)
+	return (SUCCESS,)
 
 @operation(0x3)
 def store(memory,registers,settings,operand_bytes):
@@ -54,7 +54,7 @@ def store(memory,registers,settings,operand_bytes):
 	R, XY = (operand_bytes[0],merge_bytes(*operand_bytes[1:]))
 
 	set_data(memory,XY,get_data(registers,R),settings)
-	return (0,)
+	return (SUCCESS,)
 
 @operation(0x4)
 def move(memory,registers,settings,operand_bytes):
@@ -68,7 +68,7 @@ def move(memory,registers,settings,operand_bytes):
 	R, S = (operand_bytes[1],operand_bytes[2])
 
 	set_data(registers,S,get_data(registers,R),settings)
-	return (0,)
+	return (SUCCESS,)
 
 @operation(0x5)
 def twos_complement_add(memory,registers,settings,operand_bytes):
@@ -83,7 +83,19 @@ def twos_complement_add(memory,registers,settings,operand_bytes):
 	n1, n2 = (us_to_tc(get_data(registers,S),settings['mu_size']),
 			  us_to_tc(get_data(registers,T),settings['mu_size']))
 	set_data(registers,R,tc_to_us(n1 + n2),settings)
-	return (0,)
+	return (SUCCESS,)
+
+@operation(0x6)
+def floating_point_add(memory,registers,settings,operand_bytes): #incomplete
+	"""Opcode 6, Operand RST
+	ADD the bit patterns in registers S and T as though they represented values in floating-point
+	notation and leave the floating-point result in register R.
+	Example: 634E would cause the values in registers 4 and E to be added as floating-point values
+	and the result to be placed in register 3.
+	"""
+	R, S, T = operand_bytes[:]
+
+	return (ERROR,"incomplete function")
 #
 
 def set_data(dic,key,value,settings):
