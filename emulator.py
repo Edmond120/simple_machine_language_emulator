@@ -84,7 +84,7 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 
 def show_state(memory,registers,program_counter,instruction_register,settings):
 	print('program_counter: ' + phex(program_counter,settings['reg_size']//4))
-	print('instruction_register: ' + phex(instruction_register,settings['reg_size']//4))
+	print('instruction_register: ' + phex(instruction_register,settings['ins_reg_size']//4))
 	print('memory:')
 	print_data(memory,p=settings['mu_size']//4)
 	print('registers:')
