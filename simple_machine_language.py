@@ -155,8 +155,7 @@ def bitwise_rotate(memory,registers,settings,operand_bytes):
 	value = get_data(registers,R)
 	bits = settings['reg_size']
 
-	for i in range(X):
-		value = bit_rotate_right(value,bits)
+	value = bit_rotate_right(value,bits,X)
 
 	set_data(registers,R,value,settings)
 	return (SUCCESS,)
