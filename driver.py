@@ -15,7 +15,12 @@ def main(argv):
 				'step'           : True,
 				'print_init'     : True,
 				'mu_size'        : 8, #amount of bits a memory cell can hold
-				'reg_size'       : 16, #amount of bits a register can hold
+				'reg_size'       : 8, #amount of bits a register can hold
+
+				#amount of bits the instruction register can hold
+				#should always be twice the mu_size
+				'ins_reg_size'   : 16
+
 				'micro_step'     : True,
 				'clear'          : True,
 				'micro_step_doc' : True,
