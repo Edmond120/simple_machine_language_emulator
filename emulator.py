@@ -80,7 +80,7 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 			return 0
 		#
 		step(settings['micro_step'],'finished executing, ready to fetch...')
-		step(settings['step'])
+		step(settings['step'] and not settings['micro_step'],'step...')
 
 def show_state(memory,registers,program_counter,instruction_register,settings):
 	print('program_counter: ' + phex(program_counter,settings['reg_size']//4))
