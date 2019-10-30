@@ -1,6 +1,13 @@
 from bit_utils import *
 
+#messages
+SUCCESS = 0
+ERROR = 1
+END = 2
+JUMP = 3
+
 #operation functions
+#return value, should be a tuple where the first item is a message (int)
 def load_register_from_memory(memory,registers,settings,operand_bytes):
 	"""Opcode 1, Operand RXY
 	LOAD the register R with the bit pattern found in the memory cell whose
@@ -11,6 +18,7 @@ def load_register_from_memory(memory,registers,settings,operand_bytes):
 	R, XY = (operand_bytes[0],merge_bytes(*operand_bytes[1:]))
 
 	set_data(registers,R,get_data(memory,XY),settings)
+	return (0,)
 
 def load_register_with_bit_pattern(memory,registers,settings,operand_bytes):
 	"""Opcode 2, Operand RXY
@@ -20,6 +28,7 @@ def load_register_with_bit_pattern(memory,registers,settings,operand_bytes):
 	R, XY = (operand_bytes[0],merge_bytes(*operand_bytes[1:]))
 
 	set_data(registers,R,XY,settings)
+	return (0,)
 
 def store(memory,registers,settings,operand_bytes):
 	"""Opcode 3, Operand RXY
@@ -31,6 +40,7 @@ def store(memory,registers,settings,operand_bytes):
 	R, XY = (operand_bytes[0],merge_bytes(*operand_bytes[1:]))
 
 	set_data(memory,XY,get_data(registers,R),settings)
+	return (0,)
 
 def move(memory,registers,settings,operand_bytes):
 	"""Opcode 4, Operand 0RS
@@ -43,6 +53,7 @@ def move(memory,registers,settings,operand_bytes):
 	R, S = (operand_bytes[1],operand_bytes[2])
 
 	set_data(registers,S,get_data(registers,R),settings)
+	return (0,)
 
 def twos_complement_add(memory,registers,settings,operand_bytes):
 	"""Opcode 5, Operand RST
@@ -56,6 +67,7 @@ def twos_complement_add(memory,registers,settings,operand_bytes):
 	n1, n2 = (us_to_tc(get_data(registers,S),settings['mu_size']),
 			  us_to_tc(get_data(registers,T),settings['mu_size']))
 	set_data(registers,R,tc_to_us(n1 + n2),settings)
+	return (0,)
 #
 
 def set_data(dic,key,value,settings):
