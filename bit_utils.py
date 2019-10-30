@@ -33,3 +33,6 @@ def tc_to_us(twos_complement_int, bits):
 		return twos_complement_int
 	else:
 		return twos_complement_int + 2**bits
+
+def bit_rotate_right(value,bits): #incomplete
+	pass
