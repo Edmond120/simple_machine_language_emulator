@@ -34,5 +34,11 @@ def tc_to_us(twos_complement_int, bits):
 	else:
 		return twos_complement_int + 2**bits
 
-def bit_rotate_right(value,bits): #incomplete
-	pass
+def bit_rotate_right(value,bits,times):
+	most_sig_bit_value = 2 ** (bits - 1)
+	for i in range(times):
+		right_most_bit = value % 2
+		value //= 2 #shift
+		if right_most_bit != 0:
+			value += most_sig_bit_value
+	return value
