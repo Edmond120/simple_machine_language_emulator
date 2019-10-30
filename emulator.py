@@ -91,7 +91,7 @@ def show_state(memory,registers,program_counter,instruction_register,settings):
 	print_data(registers,p=settings['reg_size']//4)
 
 def read_instruction(instruction_register,settings):
-	bytes = sml.break_bytes(instruction_register,settings['ins_reg_size']/4)
+	bytes = sml.break_bytes(instruction_register,settings['ins_reg_size']//4)
 	return (bytes[0],bytes[1:])
 
 def load_data(data_file):
