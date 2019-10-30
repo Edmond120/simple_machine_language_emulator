@@ -105,13 +105,17 @@ def load_data(data_file):
 
 def phex(s,p):
 	r = hex(s)
-	if len(r) < 2 + p:
+	if len(r) < 2 + p or p == 0:
 		return '0x' + ('0' * (2 + p - len(r))) + r[2:]
 	else:
 		return r
 
 def _data_list(data,p):
-	return list(map(lambda x: (hex(x),phex(data[x],p),),sorted([key for key in data.keys() if key != 'data_type'])))
+	if len(data) > 1:
+		fp = max([ len(hex(key))-2 for key in data.keys() if key != 'data_type'])
+	else:
+		fp = 0
+	return list(map(lambda x: (phex(x,fp),phex(data[x],p),),sorted([key for key in data.keys() if key != 'data_type'])))
 
 def print_data(data, head='\t', spacing=' : ', tail='\n', p=None):
 	dl = _data_list(data,p=p)
