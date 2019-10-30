@@ -19,7 +19,7 @@ def main(argv):
 
 				#amount of bits the instruction register can hold
 				#should always be twice the mu_size
-				'ins_reg_size'   : 16
+				'ins_reg_size'   : 16,
 
 				'micro_step'     : True,
 				'clear'          : True,
