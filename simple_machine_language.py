@@ -80,8 +80,8 @@ def twos_complement_add(memory,registers,settings,operand_bytes):
 	"""
 	R, S, T = operand_bytes[:]
 
-	n1, n2 = (us_to_tc(get_data(registers,S),settings['mu_size']),
-			  us_to_tc(get_data(registers,T),settings['mu_size']))
+	n1, n2 = (us_to_tc(get_data(registers,S),settings['reg_size']),
+			  us_to_tc(get_data(registers,T),settings['reg_size']))
 	set_data(registers,R,tc_to_us(n1 + n2),settings)
 	return (SUCCESS,)
 
@@ -163,7 +163,12 @@ def bitwise_rotate(memory,registers,settings,operand_bytes):
 #
 
 def set_data(dic,key,value,settings):
-	dic[key] = overflow(value,settings['mu_size'])
+	if dic['data_type'] == 'registers':
+		dic[key] = overflow(value,settings['reg_size'])
+	elif dic['data_type'] == 'memory':
+		dic[key] = overflow(value,settings['mu_size'])
+	else:
+		raise ValueError('unexpected argument value')
 
 def get_data(dic,key):
 	item = dic.get(key)
