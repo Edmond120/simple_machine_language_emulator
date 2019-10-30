@@ -12,9 +12,13 @@ def main(argv):
 	memory_size_bits = 8
 
 	settings = {
-				'step'       : False,
-				'print_init' : True,
-				'mu_size'    : 8, #amount of bits in a memory unit
+				'step'           : True,
+				'print_init'     : True,
+				'mu_size'        : 8, #amount of bits in a memory cell can hold
+				'reg_size'       : 16, #amount of bits in a register can hold
+				'micro_step'     : True,
+				'clear'          : True,
+				'micro_step_doc' : True,
 	}
 
 	with open(memory_file_path,'r') as memory_file, open(register_file_path,'r') as register_file:
