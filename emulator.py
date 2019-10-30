@@ -106,7 +106,10 @@ def load_data(data_file):
 def phex(s,p):
 	r = hex(s)
 	if len(r) < 2 + p or p == 0:
-		return '0x' + ('0' * (2 + p - len(r))) + r[2:]
+		pn = (2 + p - len(r))
+		if pn < 0:
+			pn = 0
+		return '0x' + ('0' * pn) + r[2:]
 	else:
 		return r
 
