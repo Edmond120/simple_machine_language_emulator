@@ -159,6 +159,24 @@ def bitwise_rotate(memory,registers,settings,operand_bytes):
 
 	set_data(registers,R,value,settings)
 	return (SUCCESS,)
+
+@operation(0xB)
+def jump(memory,registers,settings,operand_bytes):
+	"""Opcode B, Operand RXY
+	JUMP to the instruction located in the memory cell at address XY if the bit pattern in register R
+	is equal to the bit pattern in register number 0. Otherwise, continue with the normal sequence of
+	execution. (The jump is implemented by copying XY into the program counter during the execute
+	phase.)
+	Example: B43C would first compare the contents of register 4 with the contents of register 0. If
+	the two were equal, the pattern 3C would be placed in the program counter so that the next
+	instruction executed would be the one located at that memory address. Otherwise, nothing would
+	be done and program execution would continue in its normal sequence.
+	"""
+	R, XY = (operand_bytes[0],merge_bytes(*operand_bytes[1:]))
+	if get_data(registers,0) == get_data(registers,R):
+		return (JUMP,XY)
+	else:
+		return (SUCCESS,)
 #
 
 def set_data(dic,key,value,settings):

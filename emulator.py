@@ -67,6 +67,8 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 		msg = operation(memory,registers,settings,operand_bytes)
 		if msg[0] == sml.SUCCESS:
 			pass
+		elif msg[0] == sml.JUMP:
+			program_counter = msg[1]
 		elif msg[0] == sml.ERROR:
 			print('error')
 			print('function name: ', operation.__name__)
