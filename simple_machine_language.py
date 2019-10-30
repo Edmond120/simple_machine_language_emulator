@@ -124,6 +124,20 @@ def bitwise_and(memory,registers,settings,operand_bytes):
 	result = bp1 & bp2
 	set_data(registers,R,result,settings)
 	return (SUCCESS,)
+
+@operation(0x9)
+def bitwise_exclusive_or(memory,registers,settings,operand_bytes):
+	"""Opcode 9, Operand RST
+	EXCLUSIVE OR the bit patterns in registers S and T and place the result in register R.
+	Example: 95F3 would cause the result of EXCLUSIVE ORing the contents of registers F and 3 to
+	be placed in register 5.
+	"""
+	R, S, T = operand_bytes[:]
+	bp1 = get_data(registers,S)
+	bp2 = get_data(registers,T)
+	result = bp1 ^ bp2
+	set_data(registers,R,result,settings)
+	return (SUCCESS,)
 #
 
 def set_data(dic,key,value,settings):
