@@ -177,6 +177,17 @@ def jump(memory,registers,settings,operand_bytes):
 		return (JUMP,XY)
 	else:
 		return (SUCCESS,)
+
+@operation(0xC)
+def halt_execution(memory,registers,settings,operand_bytes):
+	"""Opcode C, Operand 000
+	HALT execution.
+	Example: C000 would cause program execution to stop.
+	"""
+	if operand_bytes != [0,0,0]:
+		operand_str = str.join(' ',map(hex,operand_bytes))
+		return (ERROR,'Operation HALT expected 000 but recieved ' + operand_str)
+	return (END,)
 #
 
 def set_data(dic,key,value,settings):
