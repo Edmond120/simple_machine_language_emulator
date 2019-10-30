@@ -147,7 +147,19 @@ def bitwise_rotate(memory,registers,settings,operand_bytes):
 	Example: A403 would cause the contents of register 4 to be rotated 3 bits to the right in a circular
 	fashion.
 	"""
-	return (ERROR,"incomplete")
+	if operand_bytes[1] != 0x0:
+		operand_str = str.join(' ',map(hex,operand_bytes))
+		return (ERROR,'Operation ROTATE expected R0X but recieved ' + operand_str)
+	R, X = (operand_bytes[0],operand_bytes[2])
+
+	value = get_data(registers,R)
+	bits = settings[reg_size]
+
+	for i in range(X):
+		value = bit_rotate_right(value,bits)
+
+	set_data(registers,R,value,settings)
+	return (SUCCESS,)
 #
 
 def set_data(dic,key,value,settings):
