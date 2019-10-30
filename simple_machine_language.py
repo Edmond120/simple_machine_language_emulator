@@ -96,6 +96,34 @@ def floating_point_add(memory,registers,settings,operand_bytes): #incomplete
 	R, S, T = operand_bytes[:]
 
 	return (ERROR,"incomplete function")
+
+@operation(0x7)
+def bitwise_or(memory,registers,settings,operand_bytes):
+	"""Opcode 7, Operand RST
+	OR the bit patterns in registers S and T and place the result in register R.
+	Example: 7CB4 would cause the result of ORing the contents of registers B and 4 to be placed in
+	register C.
+	"""
+	R, S, T = operand_bytes[:]
+	bp1 = get_data(registers,S)
+	bp2 = get_data(registers,T)
+	result = bp1 | bp2
+	set_data(registers,R,result,settings)
+	return (SUCCESS,)
+
+@operation(0x8)
+def bitwise_and(memory,registers,settings,operand_bytes):
+	"""Opcode 8, Operand RST
+	AND the bit patterns in register S and T and place the result in register R.
+	Example: 8045 would cause the result of ANDing the contents of registers 4 and 5 to be placed in
+	register 0.
+	"""
+	R, S, T = operand_bytes[:]
+	bp1 = get_data(registers,S)
+	bp2 = get_data(registers,T)
+	result = bp1 & bp2
+	set_data(registers,R,result,settings)
+	return (SUCCESS,)
 #
 
 def set_data(dic,key,value,settings):
