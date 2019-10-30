@@ -97,7 +97,7 @@ def read_instruction(instruction_register,settings):
 def load_data(data_file):
 	data={}
 	for line in data_file:
-		if len(line) == 0 or line[0] == '#':
+		if len(line) == 1 or line[0] == '#':
 			continue
 		address, info = line.split(" ")
 		data[int(address,16)] = int(info,16)
