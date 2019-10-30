@@ -1,6 +1,8 @@
+import sys
+
 import emulator
 
-def main():
+def main(argv):
 	memory_file_path   = 'memory'
 	register_file_path = 'registers'
 	start_address      = '0x0'
@@ -16,7 +18,7 @@ def main():
 	}
 
 	with open(memory_file_path,'r') as memory_file, open(register_file_path,'r') as register_file:
-		emulator.emulate(memory_file,register_file,start_address,settings)
+		return emulator.emulate(memory_file,register_file,start_address,settings)
 
 if __name__ == '__main__':
-	main()
+	exit(main(sys.argv))
