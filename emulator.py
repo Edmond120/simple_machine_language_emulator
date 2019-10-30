@@ -63,9 +63,16 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 		decode_step(settings['micro_step'],instruction,operand_bytes,'finished decoding, ready to execute...')
 		#execute
 		msg = operation(memory,registers,settings,operand_bytes)
-		if msg == sml.SUCCESS:
+		if msg[0] == sml.SUCCESS:
 			pass
-		elif msg == sml.END:
+		elif msg[0] == sml.ERROR:
+			print('error')
+			print('function name: ', operation.__name__)
+			print('opcode       : ', instruction)
+			print('operand      : ', operand_bytes)
+			print('error message: ', msg[1])
+			return 1
+		elif msg[0] == sml.END:
 			return 0
 		#
 		step(settings['micro_step'],'finished executing, ready to fetch...')
