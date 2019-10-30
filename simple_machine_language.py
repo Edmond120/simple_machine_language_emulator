@@ -64,7 +64,7 @@ def move(memory,registers,settings,operand_bytes):
 	"""
 	if operand_bytes[0] != 0x0:
 		operand_str = str.join(' ',map(hex,operand_bytes))
-		raise ValueError('Operation MOVE expected 0RS but recieved ' + operand_str)
+		return (ERROR,'Operation MOVE expected 0RS but recieved ' + operand_str)
 	R, S = (operand_bytes[1],operand_bytes[2])
 
 	set_data(registers,S,get_data(registers,R),settings)
