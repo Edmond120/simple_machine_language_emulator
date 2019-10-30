@@ -54,7 +54,7 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 		#
 		step(settings['micro_step'],'finished fetching, ready to decode...')
 		#decode
-		instruction ,operand_bytes = read_instruction(instruction_register)
+		instruction ,operand_bytes = read_instruction(instruction_register,settings)
 		operation = sml.operation_map.get(instruction)
 		if operation is None:
 			print('unknown operation: ', phex(instruction,settings['reg_size']//8), file=sys.stderr)
@@ -86,8 +86,8 @@ def show_state(memory,registers,program_counter,instruction_register,settings):
 	print('registers:')
 	print_data(registers,p=settings['reg_size']//4)
 
-def read_instruction(instruction_register):
-	bytes = sml.break_bytes(instruction_register,4)
+def read_instruction(instruction_register,settings):
+	bytes = sml.break_bytes(instruction_register,settings['ins_reg_size']/4)
 	return (bytes[0],bytes[1:])
 
 def load_data(data_file):
