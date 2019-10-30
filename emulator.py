@@ -111,7 +111,7 @@ def phex(s,p):
 		return r
 
 def _data_list(data,p):
-	return list(map(lambda x: (hex(x),phex(data[x],p),),sorted(data.keys())))
+	return list(map(lambda x: (hex(x),phex(data[x],p),),sorted([key for key in data.keys() if key != 'data_type'])))
 
 def print_data(data, head='\t', spacing=' : ', tail='\n', p=None):
 	dl = _data_list(data,p=p)
