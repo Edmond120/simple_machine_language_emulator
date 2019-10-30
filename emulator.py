@@ -12,8 +12,10 @@ def clear():
 		print('clearing failed')
 
 def emulate(memory_file,register_file,start_address,settings):
-	memory	= load_data(memory_file)
+	memory= load_data(memory_file)
+	memory['data_type'] = 'memory'
 	registers = load_data(register_file)
+	registers['data_type'] = 'registers'
 	program_counter = int(start_address,16)
 	instruction_register = 0
 	return run_emulator(memory,registers,program_counter,instruction_register,settings)
