@@ -138,6 +138,16 @@ def bitwise_exclusive_or(memory,registers,settings,operand_bytes):
 	result = bp1 ^ bp2
 	set_data(registers,R,result,settings)
 	return (SUCCESS,)
+
+@operation(0xA)
+def bitwise_rotate(memory,registers,settings,operand_bytes):
+	"""Opcode A, Operand R0X
+	ROTATE the bit pattern in register R one bit to the right X times. Each time place the bit that
+	started at the low-order end at the high-order end.
+	Example: A403 would cause the contents of register 4 to be rotated 3 bits to the right in a circular
+	fashion.
+	"""
+	return (ERROR,"incomplete")
 #
 
 def set_data(dic,key,value,settings):
