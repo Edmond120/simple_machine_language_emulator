@@ -82,7 +82,7 @@ def twos_complement_add(memory,registers,settings,operand_bytes):
 
 	n1, n2 = (us_to_tc(get_data(registers,S),settings['reg_size']),
 			  us_to_tc(get_data(registers,T),settings['reg_size']))
-	set_data(registers,R,tc_to_us(n1 + n2),settings)
+	set_data(registers,R,tc_to_us(n1 + n2,settings['reg_size']),settings)
 	return (SUCCESS,)
 
 @operation(0x6)
