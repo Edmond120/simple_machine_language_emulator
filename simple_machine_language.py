@@ -79,10 +79,9 @@ def twos_complement_add(memory,registers,settings,operand_bytes):
 	added and the sum placed in register 7.
 	"""
 	R, S, T = operand_bytes[:]
-
-	n1, n2 = (us_to_tc(get_data(registers,S),settings['reg_size']),
-			  us_to_tc(get_data(registers,T),settings['reg_size']))
-	set_data(registers,R,tc_to_us(n1 + n2,settings['reg_size']),settings)
+	n1 = get_data(registers,S)
+	n2 = get_data(registers,T)
+	set_data(registers,R,n1 + n2,settings)
 	return (SUCCESS,)
 
 @operation(0x6)
