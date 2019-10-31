@@ -27,7 +27,7 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 		if settings['clear']:
 			clear()
 		show_state(memory,registers,program_counter,instruction_register,settings)
-		input(prompt)
+		parse_commands(prompt)
 
 	def decode_step(condition,instruction,operand_bytes,prompt=''):
 		if not condition:
@@ -38,12 +38,10 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 		print('decoded instruction: ', hex(instruction))
 		print('decoded operand    : ', *list(map(hex,operand_bytes)))
 		print()
-		print('operation name     : ', sml.operation_map[instruction].__name__)
+		show_name(instruction)
 		if settings['micro_step_doc']:
-			print('operation documentation:')
-			print('------------------------')
-			print(sml.operation_map[instruction].__doc__)
-		input(prompt)
+			show_doc(instruction)
+		parse_commands(prompt)
 
 	if settings['print_init']:
 		print('print_init')
@@ -85,6 +83,34 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 		#
 		step(settings['micro_step'],'finished executing, ready to fetch...')
 		step(settings['step'] and not settings['micro_step'],'step...')
+
+def parse_commands(prompt):
+	while True:
+		if not parse_command(input(prompt)):
+			break
+
+def parse_command(command_str):
+	cs = command_str.split(' ')
+	if cs[0] == 'doc' and len(cs) == 2:
+		try:
+			c = int(cs[1],16)
+			show_name(c)
+			show_doc(c)
+		except:
+			print('invalid instruction')
+		return True
+	elif len(command_str) == 0:
+		return False
+	else:
+		return True
+
+def show_name(instruction):
+	print('operation name     : ', sml.operation_map[instruction].__name__)
+
+def show_doc(instruction):
+	print('operation documentation:')
+	print('------------------------')
+	print(sml.operation_map[instruction].__doc__)
 
 def show_state(memory,registers,program_counter,instruction_register,settings):
 	print('program_counter: ' + phex(program_counter,settings['reg_size']//4))
