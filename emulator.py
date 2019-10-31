@@ -3,6 +3,25 @@ import os
 
 import simple_machine_language as sml
 
+default_settings = {
+			'step'           : False,
+			'print_init'     : True,
+			'mu_size'        : 8, #amount of bits a memory cell can hold
+			'reg_size'       : 8, #amount of bits a register can hold
+
+			#amount of bits the instruction register can hold
+			#should always be twice the mu_size
+			'ins_reg_size'   : 16,
+
+			'micro_step'     : True,
+			'clear'          : True,
+			'micro_step_doc' : True,
+			'print_end'      : False,
+			'end_wait'       : True,
+
+			'memory_maps'    : [],
+}
+
 def clear():
 	if os.name == 'nt':
 		os.system('cls')
@@ -12,6 +31,8 @@ def clear():
 		print('clearing failed')
 
 def emulate(memory_file,register_file,start_address,settings):
+	if settings == None:
+		settings = default_settings
 	memory= load_data(memory_file)
 	memory['data_type'] = 'memory'
 	memory['fresh'    ] = {}
@@ -80,13 +101,20 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 				if settings['clear']:
 					clear()
 				show_state(memory,registers,program_counter,instruction_register,settings)
+			if settings['end_wait']:
+				input('finished!')
 			return 0
 		#
 
-		#send data in  memory maps
+		mstep = settings['micro_step'] and len(settings['memory_maps']) != 0 and is_memory_maps_accessed(memory,settings)
+		step(mstep,'finished executing, ready to send data via memory maps...')
+
+		#send data in memory maps
 		enforce_memory_maps(memory,settings)
-		#
-		step(settings['micro_step'],'finished executing, ready to fetch...')
+
+		step(mstep,'ready to fetch...')
+		step(not mstep,'finished executing, ready to fetch...')
+
 		step(settings['step'] and not settings['micro_step'],'step...')
 
 def enforce_memory_maps(memory,settings):
@@ -150,7 +178,7 @@ def load_data(data_file):
 		else:
 			address = l[0]
 			info = l[1]
-			anno[int(address,16)] = str.join('',l[2:])
+			anno[int(address,16)] = str.join(' ',l[2:])[:-1]
 
 		data[int(address,16)] = int(info,16)
 	data['annotations'] = anno
@@ -185,5 +213,13 @@ def _data_list(data,p):
 
 def print_data(data, head='\t', spacing=' : ', tail='\n', p=None):
 	dl = _data_list(data,p=p)
+	old_address = None
+	if len(dl) > 0:
+		old_address = int(dl[0][0],16) - 1
 	for item in dl:
 		print(head + item[0] + spacing + item[1],item[2], end=tail)
+		new_address = int(item[0],16)
+		if new_address != old_address + 1:
+			print()
+		old_address = new_address
+
