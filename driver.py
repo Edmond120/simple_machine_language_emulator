@@ -7,10 +7,6 @@ def main(argv):
 	register_file_path = 'registers'
 	start_address      = '0x0'
 
-	step = False
-	print_init = True
-	memory_size_bits = 8
-
 	settings = {
 				'step'           : True,
 				'print_init'     : True,
