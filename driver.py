@@ -8,7 +8,7 @@ def main(argv):
 	start_address      = '0x0'
 
 	settings = {
-				'step'           : True,
+				'step'           : False,
 				'print_init'     : True,
 				'mu_size'        : 8, #amount of bits a memory cell can hold
 				'reg_size'       : 8, #amount of bits a register can hold
