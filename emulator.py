@@ -81,8 +81,18 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 				show_state(memory,registers,program_counter,instruction_register,settings)
 			return 0
 		#
+
+		#send data in  memory maps
+		enforce_memory_maps(memory,settings)
+		#
 		step(settings['micro_step'],'finished executing, ready to fetch...')
 		step(settings['step'] and not settings['micro_step'],'step...')
+
+def enforce_memory_maps(memory,settings):
+	maps = settings['memory_maps']
+	for item in maps:
+		data = sml.get_data(memory,item[0])
+		sml.set_data(memory,item[0],item[1](data),settings)
 
 def parse_commands(prompt):
 	while True:
@@ -126,11 +136,20 @@ def read_instruction(instruction_register,settings):
 
 def load_data(data_file):
 	data={}
+	anno={}
 	for line in data_file:
 		if len(line) == 1 or line[0] == '#':
 			continue
-		address, info = line.split(" ")
+		l = line.split(" ")
+		if len(l) == 2:
+			address, info = l
+		else:
+			address = l[0]
+			info = l[1]
+			anno[int(address,16)] = str.join('',l[2:])
+
 		data[int(address,16)] = int(info,16)
+	data['annotations'] = anno
 	return data
 
 def phex(s,p):
@@ -143,14 +162,24 @@ def phex(s,p):
 	else:
 		return r
 
+def check_key(key):
+	return type(key) == int
+
 def _data_list(data,p):
-	if len(data) > 1:
-		fp = max([ len(hex(key))-2 for key in data.keys() if key != 'data_type'])
+	valid_data = False
+	for key in data.keys():
+		if check_key(key):
+			valid_data = True
+			break
+	if valid_data:
+		fp = max([ len(hex(key))-2 for key in data.keys() if check_key(key)])
 	else:
 		fp = 0
-	return list(map(lambda x: (phex(x,fp),phex(data[x],p),),sorted([key for key in data.keys() if key != 'data_type'])))
+	return list(map(lambda x: (phex(x,fp),phex(data[x],p),data['annotations'][x]\
+			if data['annotations'].get(x) != None else ''),\
+			sorted([key for key in data.keys() if check_key(key)])))
 
 def print_data(data, head='\t', spacing=' : ', tail='\n', p=None):
 	dl = _data_list(data,p=p)
 	for item in dl:
-		print(head + item[0] + spacing + item[1], end=tail)
+		print(head + item[0] + spacing + item[1],item[2], end=tail)
