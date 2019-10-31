@@ -70,11 +70,11 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 		elif msg[0] == sml.JUMP:
 			program_counter = msg[1]
 		elif msg[0] == sml.ERROR:
-			print('error')
-			print('function name: ', operation.__name__)
-			print('opcode       : ', instruction)
-			print('operand      : ', operand_bytes)
-			print('error message: ', msg[1])
+			print('error',file=sys.stderr)
+			print('function name: ', operation.__name__,file=sys.stderr)
+			print('opcode       : ', instruction,file=sys.stderr)
+			print('operand      : ', operand_bytes,file=sys.stderr)
+			print('error message: ', msg[1],file=sys.stderr)
 			return 1
 		elif msg[0] == sml.END:
 			return 0
