@@ -14,6 +14,7 @@ def clear():
 def emulate(memory_file,register_file,start_address,settings):
 	memory= load_data(memory_file)
 	memory['data_type'] = 'memory'
+	memory['fresh'    ] = {}
 	registers = load_data(register_file)
 	registers['data_type'] = 'registers'
 	program_counter = int(start_address,16)
@@ -91,8 +92,11 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 def enforce_memory_maps(memory,settings):
 	maps = settings['memory_maps']
 	for item in maps:
-		data = sml.get_data(memory,item[0])
-		sml.set_data(memory,item[0],item[1](data),settings)
+		is_fresh = memory['fresh'].get(item[0])
+		if is_fresh != None and is_fresh:
+			memory['fresh'][item[0]] = False
+			data = sml.get_data(memory,item[0])
+			sml.set_data(memory,item[0],item[1](data),settings)
 
 def parse_commands(prompt):
 	while True:

@@ -194,6 +194,7 @@ def set_data(dic,key,value,settings):
 		dic[key] = overflow(value,settings['reg_size'])
 	elif dic['data_type'] == 'memory':
 		dic[key] = overflow(value,settings['mu_size'])
+		dic['fresh'][key] = True
 	else:
 		raise ValueError('unexpected argument value')
 
