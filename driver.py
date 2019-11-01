@@ -57,19 +57,19 @@ def main(argv):
 			print('unknown argument:',arg,file=sys.stderr)
 			exit(1)
 
-		if setup_turtle:
-			ti = turtle_interface.Turtle_interface()
-			settings['memory_maps'] = [
-				[ 0x2, ti.forward    ],
-				[ 0x3, ti.left       ],
-				[ 0x4, ti.right      ],
-				[ 0x5, ti.setheading ],
-				[ 0x6, ti.setx       ],
-				[ 0x7, ti.sety       ],
-				[ 0x8, ti.speed      ],
-				[ 0x9, ti.pendown    ],
-				[ 0xa, ti.penup      ],
-			]
+	if setup_turtle:
+		ti = turtle_interface.Turtle_interface()
+		settings['memory_maps'] = [
+			[ 0x2, ti.forward    ],
+			[ 0x3, ti.left       ],
+			[ 0x4, ti.right      ],
+			[ 0x5, ti.setheading ],
+			[ 0x6, ti.setx       ],
+			[ 0x7, ti.sety       ],
+			[ 0x8, ti.speed      ],
+			[ 0x9, ti.pendown    ],
+			[ 0xa, ti.penup      ],
+		]
 	#
 
 	with open(memory_file_path,'r') as memory_file, open(register_file_path,'r') as register_file:
