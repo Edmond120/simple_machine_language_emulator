@@ -27,6 +27,7 @@ def main(argv):
 				'memory_maps'    : [],
 	}
 
+	setup_turtle = True
 
 	#these are just setting presets I like to use
 	for arg in argv:
@@ -50,7 +51,13 @@ def main(argv):
 			settings['clear'     ] = False
 		elif arg == 'no_end_wait':
 			settings['end_wait'  ] = False
-		elif arg == 'turtle':
+		elif arg == 'no_turtle':
+			setup_turtle = False
+		else:
+			print('unknown argument:',arg,file=sys.stderr)
+			exit(1)
+
+		if setup_turtle = True:
 			ti = turtle_interface.Turtle_interface()
 			settings['memory_maps'] = [
 				[ 0x2, ti.forward    ],
@@ -63,9 +70,6 @@ def main(argv):
 				[ 0x9, ti.pendown    ],
 				[ 0xa, ti.penup      ],
 			]
-		else:
-			print('unknown argument:',arg,file=sys.stderr)
-			exit(1)
 	#
 
 	with open(memory_file_path,'r') as memory_file, open(register_file_path,'r') as register_file:
