@@ -2,6 +2,7 @@
 #first column are memory addresses
 #second column are values
 #everything past the second column are just annotations
+#every undeclared memory cell by default is 0
 #WARNING: numbers are ALL in HEXADECIMAL
 
 00 B0 JUMP
@@ -53,6 +54,8 @@ F0 2F LOAD BIT PATTERN
 F1 3c
 
 #init loop counter
+#makes sure that adding -1 to reg D 6 times will result in reg 0 == reg D
+#regardless of the value in reg 0
 F2 5D ADD
 F3 0D
 

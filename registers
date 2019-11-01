@@ -1,0 +1,8 @@
+0 00 <- can be any value and hexagon function will still work
+1 00 <- return address
+2 00 <- hexagon side length
+A 00 <- bottom registers will be initialized by hexagon function
+C 00 <- decrement value
+D 00 <- loop counter, loop exits when this matches reg 0
+E 00 <- hexagon side length
+F 00 <- degrees turtle will turn
