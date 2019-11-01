@@ -25,7 +25,7 @@
 #here is an example program, that draws a hexagon with length 20 sides
 
 10 22 LOAD BIT PATTERN <- Example code beginning
-11 14
+11 64 <- hexagon side length
 12 21 LOAD BIT PATTERN
 13 16 <- set return address before using hexagon function
 14 B0 JUMP <- jump to hexagon function
