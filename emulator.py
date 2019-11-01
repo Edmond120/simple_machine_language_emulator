@@ -49,7 +49,6 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 		if settings['clear']:
 			clear()
 		show_state(memory,registers,program_counter,instruction_register,settings)
-		print(memory['fresh'])
 		parse_commands(prompt)
 
 	def decode_step(condition,instruction,operand_bytes,prompt=''):
