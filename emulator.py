@@ -49,6 +49,7 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 		if settings['clear']:
 			clear()
 		show_state(memory,registers,program_counter,instruction_register,settings)
+		print(memory['fresh'])
 		parse_commands(prompt)
 
 	def decode_step(condition,instruction,operand_bytes,prompt=''):
@@ -129,9 +130,9 @@ def enforce_memory_maps(memory,settings):
 	for item in maps:
 		is_fresh = memory['fresh'].get(item[0])
 		if is_fresh == True:
-			memory['fresh'][item[0]] = False
 			data = sml.get_data(memory,item[0])
 			sml.set_data(memory,item[0],item[1](data),settings)
+			memory['fresh'][item[0]] = False
 
 def parse_commands(prompt):
 	while True:
