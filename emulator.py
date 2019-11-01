@@ -117,11 +117,18 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 
 		step(settings['step'] and not settings['micro_step'],'step...')
 
+def is_memory_maps_accessed(memory,settings):
+	maps = settings['memory_maps']
+	for item in maps:
+		if memory['fresh'].get(item[0]) == True:
+			return True
+	return False
+
 def enforce_memory_maps(memory,settings):
 	maps = settings['memory_maps']
 	for item in maps:
 		is_fresh = memory['fresh'].get(item[0])
-		if is_fresh != None and is_fresh:
+		if is_fresh == True:
 			memory['fresh'][item[0]] = False
 			data = sml.get_data(memory,item[0])
 			sml.set_data(memory,item[0],item[1](data),settings)
