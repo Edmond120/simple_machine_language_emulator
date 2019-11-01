@@ -53,6 +53,8 @@ def main(argv):
 			settings['end_wait'  ] = False
 		elif arg == 'no_turtle':
 			setup_turtle = False
+		elif arg == 'no_doc':
+			settings['micro_step_doc'] = False
 		else:
 			print('unknown argument:',arg,file=sys.stderr)
 			exit(1)
