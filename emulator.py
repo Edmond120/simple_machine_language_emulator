@@ -225,12 +225,12 @@ def print_data(data,program_counter, head='\t', spacing=' : ', tail='\n', p=None
 		old_address = int(dl[0][0],16) - 1
 	for item in dl:
 		new_address = int(item[0],16)
+		if new_address != old_address + 1:
+			print()
 		if program_counter == new_address:
 			s = '>>>>>'
 		else:
 			s = ''
 		print(s + head + item[0] + spacing + item[1],item[2], end=tail)
-		if new_address != old_address + 1:
-			print()
 		old_address = new_address
 
