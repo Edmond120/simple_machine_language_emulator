@@ -22,7 +22,7 @@
 0a 00 mapped to turtle.penup
 
 #code goes here
-#here is an example program, that draws a hexagon with length 20 sides
+#here is an example program, that draws a hexagon with length 100 sides
 
 10 22 LOAD BIT PATTERN <- Example code beginning
 11 64 <- hexagon side length
