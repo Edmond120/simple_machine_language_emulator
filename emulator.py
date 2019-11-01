@@ -158,9 +158,9 @@ def show_state(memory,registers,program_counter,instruction_register,settings):
 	print('program_counter: ' + phex(program_counter,settings['reg_size']//4))
 	print('instruction_register: ' + phex(instruction_register,settings['ins_reg_size']//4))
 	print('memory:')
-	print_data(memory,p=settings['mu_size']//4)
+	print_data(memory,program_counter,p=settings['mu_size']//4)
 	print('registers:')
-	print_data(registers,p=settings['reg_size']//4)
+	print_data(registers,None,p=settings['reg_size']//4)
 
 def read_instruction(instruction_register,settings):
 	bytes = sml.break_bytes(instruction_register,settings['ins_reg_size']//4)
@@ -211,14 +211,18 @@ def _data_list(data,p):
 			if data['annotations'].get(x) != None else ''),\
 			sorted([key for key in data.keys() if check_key(key)])))
 
-def print_data(data, head='\t', spacing=' : ', tail='\n', p=None):
+def print_data(data,program_counter, head='\t', spacing=' : ', tail='\n', p=None):
 	dl = _data_list(data,p=p)
 	old_address = None
 	if len(dl) > 0:
 		old_address = int(dl[0][0],16) - 1
 	for item in dl:
-		print(head + item[0] + spacing + item[1],item[2], end=tail)
 		new_address = int(item[0],16)
+		if program_counter == new_address:
+			s = '>>>>>'
+		else:
+			s = ''
+		print(s + head + item[0] + spacing + item[1],item[2], end=tail)
 		if new_address != old_address + 1:
 			print()
 		old_address = new_address
