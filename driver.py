@@ -57,7 +57,7 @@ def main(argv):
 			print('unknown argument:',arg,file=sys.stderr)
 			exit(1)
 
-		if setup_turtle = True:
+		if setup_turtle:
 			ti = turtle_interface.Turtle_interface()
 			settings['memory_maps'] = [
 				[ 0x2, ti.forward    ],
