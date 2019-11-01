@@ -57,12 +57,12 @@ F2 5D ADD
 F3 0D
 
 #init return address
-F4 31 STORE
+F4 31 STORE <- set return address
 F5 F7
 
 #loop
 F6 BD JUMP <- beginning of loop
-F7 00 <- return address, (meant to be overwritten)
+F7 00 <- return address goes here, (meant to be overwritten)
 
 #loop body
 #move turtle forward then turn
