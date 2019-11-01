@@ -107,13 +107,13 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 		#
 
 		mstep = settings['micro_step'] and len(settings['memory_maps']) != 0 and is_memory_maps_accessed(memory,settings)
-		step(mstep,'finished executing, ready to send data via memory maps...')
+		step(mstep,'finished executing, ready to send data via memory mapped I/O...')
 
 		#send data in memory maps
 		enforce_memory_maps(memory,settings)
 
 		step(mstep,'ready to fetch...')
-		step(not mstep,'finished executing, ready to fetch...')
+		step(not mstep and settings['micro_step'],'finished executing, ready to fetch...')
 
 		step(settings['step'] and not settings['micro_step'],'step...')
 
