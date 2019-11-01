@@ -34,7 +34,6 @@
 
 
 
-
 #HEXAGON FUNCTION, writes to registers C, D, E, and F
 #arguments: register 1, register 2
 #address: EA
