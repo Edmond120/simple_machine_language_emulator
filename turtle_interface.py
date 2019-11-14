@@ -3,7 +3,9 @@ class Turtle_interface:
 	def __init__(self):
 		self.turtle = turtle.Turtle()
 		self.screen = turtle.Screen()
-		turtle.setup(500,500)
+		width,height = 500,500
+		turtle.setup(width,height)
+		turtle.setworldcoordinates(0,-height,width,0)
 
 	def halt_hook(self):
 		self.screen.onkey(lambda:turtle.bye(),'q')
