@@ -6,7 +6,7 @@
 #WARNING: numbers are ALL in HEXADECIMAL
 
 00 B0 JUMP
-01 10 insert your code's starting address here
+01 18 <- starting point of your code
 
 #memory mappings, see Chapter 2 slide 27
 #write to these memory addresses to use the mapped functions
@@ -23,17 +23,55 @@
 
 #code goes here
 #here is an example program, that draws a hexagon with length 100 sides
+#set address 01 to 10 to use
 
 10 22 LOAD BIT PATTERN <- Example code beginning
 11 64 <- hexagon side length
 12 21 LOAD BIT PATTERN
 13 16 <- set return address before using hexagon function
-14 B0 JUMP <- jump to hexagon function
-15 EA
+14 B0 JUMP
+15 EA <- hexagon function address
 16 C0 HALT
 17 00 <- Example code end
 
 
+#advanced code
+18 27 LOAD BIT PATTERN
+19 96 <- starting x position
+1A 30 STORE
+1B 0a
+1C 37 STORE <- set init x position
+1D 02
+1E 30 STORE
+1F 09
+20 23 LOAD BIT PATTERN <- loop init
+21 06 <- loop counter, reg 0 should be 00
+22 24 LOAD BIT PATTERN
+23 FF <- -1
+24 25 LOAD BIT PATTERN
+25 C8 <- turtle forward move length
+26 26 LOAD BIT PATTERN
+27 3C <- turtle right turn angle
+
+28 B3 JUMP <- loop head
+29 38 <- address after loop
+2A 35 STORE <- loop body
+2B 02
+2C 36 STORE
+2D 04
+2E 21 LOAD BIT PATTERN <- calling hexagon function
+2F 34 <- return address
+30 22 LOAD BIT PATTERN
+31 64
+32 B0 JUMP
+33 EA
+
+34 53 ADD <- decrement loop, <- loop tail
+35 43
+36 B0 JUMP
+37 28 <- address to loop head
+38 C0 HALT <- after loop
+39 00
 
 #HEXAGON FUNCTION, writes to registers C, D, E, and F
 #arguments: register 1, register 2
