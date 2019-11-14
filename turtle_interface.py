@@ -5,6 +5,13 @@ class Turtle_interface:
 		self.screen = turtle.Screen()
 		turtle.setup(500,500)
 
+	def halt_hook(self):
+		self.screen.onkey(lambda:turtle.bye(),'q')
+		self.screen.listen()
+		print('press q on the turtle screen to quit!')
+		turtle.done()
+
+	#memory_mapped_functions
 	def forward(self,value):
 		self.turtle.forward(value)
 		return 0

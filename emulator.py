@@ -97,6 +97,8 @@ def run_emulator(memory,registers,program_counter,instruction_register,settings)
 			print('error message: ', msg[1],file=sys.stderr)
 			return 1
 		elif msg[0] == sml.END:
+			for hook in settings['halt_hooks']:
+				hook()
 			if settings['print_end']:
 				if settings['clear']:
 					clear()

@@ -25,6 +25,7 @@ def main(argv):
 				'end_wait'       : True,
 
 				'memory_maps'    : [],
+				'halt_hooks'     : [],
 	}
 
 	setup_turtle = True
@@ -61,6 +62,7 @@ def main(argv):
 
 	if setup_turtle:
 		ti = turtle_interface.Turtle_interface()
+		settings['halt_hooks'].append(ti.halt_hook)
 		settings['memory_maps'] = [
 			[ 0x2, ti.forward    ],
 			[ 0x3, ti.left       ],
