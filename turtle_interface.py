@@ -2,6 +2,8 @@ import turtle
 class Turtle_interface:
 	def __init__(self):
 		self.turtle = turtle.Turtle()
+		self.screen = turtle.Screen()
+		turtle.setup(500,500)
 
 	def forward(self,value):
 		self.turtle.forward(value)
