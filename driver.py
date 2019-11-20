@@ -64,15 +64,15 @@ def main(argv):
 		ti = turtle_interface.Turtle_interface()
 		settings['halt_hooks'].append(ti.halt_hook)
 		settings['memory_maps'] = [
-			[ 0x2, ti.forward    ],
-			[ 0x3, ti.left       ],
-			[ 0x4, ti.right      ],
-			[ 0x5, ti.setheading ],
-			[ 0x6, ti.setx       ],
-			[ 0x7, ti.sety       ],
-			[ 0x8, ti.speed      ],
-			[ 0x9, ti.pendown    ],
-			[ 0xa, ti.penup      ],
+			( 0x2, ti.forward    ),
+			( 0x3, ti.left       ),
+			( 0x4, ti.right      ),
+			( 0x5, ti.setheading ),
+			( 0x6, ti.setx       ),
+			( 0x7, ti.sety       ),
+			( 0x8, ti.speed      ),
+			( 0x9, ti.pendown    ),
+			( 0xa, ti.penup      ),
 		]
 	#
 
