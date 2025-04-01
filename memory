@@ -3,12 +3,12 @@
 #second column are values
 #everything past the second column are just annotations
 #every undeclared memory cell by default is 0
-#WARNING: numbers are ALL in HEXADECIMAL
+#numbers are in hexadecimal
 
 00 B0 JUMP
 01 18 <- starting point of your code
 
-#memory mappings, see Chapter 2 slide 27
+#memory mappings
 #write to these memory addresses to use the mapped functions
 #these functions will treat their input as positive, not two's complement
 02 00 mapped to turtle.forward
@@ -21,8 +21,7 @@
 09 00 mapped to turtle.pendown
 0a 00 mapped to turtle.penup
 
-#code goes here
-#here is an example program, that draws a hexagon with length 100 sides
+#draws a hexagon with length 100 sides
 #set address 01 to 10 to use
 
 10 22 LOAD BIT PATTERN <- Example code beginning
@@ -34,8 +33,6 @@
 16 C0 HALT
 17 00 <- Example code end
 
-
-#advanced code
 18 27 LOAD BIT PATTERN
 19 96 <- starting x position
 1A 30 STORE
